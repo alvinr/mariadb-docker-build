@@ -1,0 +1,18 @@
+#FROM centos:centos7.1.1503
+FROM centos:centos7
+
+RUN yum -y update
+RUN rpm -ivh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-8.noarch.rpm
+
+RUN yum -y install yum-utils
+RUN yum-builddep -y mariadb-server
+RUN yum -y install java boost-devel jemalloc-devel Judy-devel cracklib-devel libevent-devel
+
+RUN yum -y remove fakesystemd
+RUN yum -y group install "Development Tools"
+
+VOLUME ["/src"]
+
+WORKDIR /src
+
+CMD ["/bin/bash"]
